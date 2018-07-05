@@ -26,8 +26,10 @@ public class StationService {
                 .findFirst()
                 .orElseThrow(()->new Exception("no free bike"));
         Rack rack = rackDao.findByBike(bike);
-        rack.setFree(true);
-        rack.setBike(null);
+        if(rack!=null) {
+            rack.setFree(true);
+            rack.setBike(null);
+        }
         if(station.getRackSet().contains(rack)){
             station.getRackSet().remove(rack);
             station.setFreeRackQuantity(station.getFreeRackQuantity()+1);
@@ -59,6 +61,7 @@ public class StationService {
     }
 
     public Station addStation(StationDto stationDto) throws Exception{
+        if(stationDao.findById(stationDto.getName()).orElse(null)!=null) throw new Exception("station "+stationDto.getName()+" exist");
         Station station=new Station();
         station.setName(stationDto.getName());
         station.setRackSet(new HashSet<>());
@@ -95,7 +98,6 @@ public class StationService {
         Station station=stationDao.findById(stationName).orElseThrow(()->new Exception("no such station"));
         stationDao.delete(station);
     }
-
 
     public List<Station> allStation() {
         List<Station> list = new ArrayList<>();

@@ -30,7 +30,6 @@ public class Station {
             cascade = CascadeType.ALL
     )
     private Set<Bike> bikeSet;
-
     private int freeRackQuantity;
     private int occupiedRackQuantity;
     private int bikeQuantity;

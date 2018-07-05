@@ -19,9 +19,9 @@ public class Rack {
     @ManyToOne
     @JoinColumn(name = "station")
     private Station station;
-
     @OneToOne
     private Bike bike;
+
     public Rack(boolean isFree, Station station) {
         this.isFree = isFree;
         this.station = station;
